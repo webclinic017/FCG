@@ -1,0 +1,10 @@
+
+
+cum_return = give_cum_return(dataframe_complete['Close'])
+        st.metric("return", value="{:.2f}%".format(cum_return * 100), delta=None)
+        std = give_std(dataframe_complete['Close'])
+        st.metric('std', value="{:.2f}".format(std), delta=None)
+        dataframe = plot_tickers([symbol], period=str(range) + 'y',
+                                 start_date=start_date,
+                                 end_date=end_date
+                                 )
