@@ -206,6 +206,6 @@ def make_heatmap(filepath, start_date=None, end_date=None):
     data = monthly_heatmap(returns)
     fig = px.imshow(data, aspect="auto", text_auto=".2f", title="Monthly Heatmap",
                     color_continuous_scale="RdBu")
-    fig.show()
+    # fig.show()
     fig.update_xaxes(side="bottom", tickangle=0)
     return fig
