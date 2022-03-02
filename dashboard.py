@@ -34,72 +34,81 @@ if not os.path.exists('qs_reports'):
 
 etf_mapping = {"SPY": "S&P500", "DIA":"Dow Jones", "IWM": "Russell 2000"}
 st.sidebar.image("Logo cropped.png", use_column_width=True)
+#st.set_page_config(initial_sidebar_state="expanded")
 #symbol = st.sidebar.text_input("Symbol/ticker")
 keywords = st_tags_sidebar(
         label='Insert Stock or ticker {press enter}',
         text='enter ticker to confirm stock',
-        value=["msft"],
         suggestions=stocks,
         maxtags=1,
         key='1')
 currency_symbol_list=["GBP", "USD", "EUR"]
 try:
     symbol=keywords[0].lower()
+
+    stock = IEXStock(config.IEX_TOKEN, symbol)
+
+    client = redis.Redis(host="localhost", port=6379)
+
+    screen = st.sidebar.selectbox("View", ('Homepage',
+                                           'Overview',
+                                           'Fundamentals',
+                                           'Analyst Recommendations and News',
+                                           'Ownership',
+                                           'Open and Close Performance',
+                                           'Performance indicators',
+                                           'Forecast',
+                                           'Oil and CPI',
+                                           'FX',
+                                           'Sector',
+
+                                                     ), index=0)
 except:
     pass
-    symbol = "msft"
-stock = IEXStock(config.IEX_TOKEN, symbol)
-
-client = redis.Redis(host="localhost", port=6379)
-
-screen = st.sidebar.selectbox("View", ('Homepage',
-                                       'Overview',
-                                       'Fundamentals',
-                                       'Analyst Recommendations and News',
-                                       'Ownership',
-                                       'Open and Close Performance',
-                                       'Performance indicators',
-                                       'Forecast',
-                                       'Oil and CPI',
-                                       'FX',
-                                       'Sector',
-
-                                                 ), index=0)
-
-if symbol.upper() not in stocks:
-    screen = "Error"
-if screen == "Error":
-    st.text("Please provide correct ticker/symbol")
+    symbol = ""
+    screen = "Homepage"
+def validate_symbol(symbol, st):
+    if symbol.upper() not in stocks:
+        return False
+    return True
+#if screen == "Error":
+#    st.text("Please provide correct ticker/symbol")
 if screen == 'Homepage':
 
     st.image('Logo cropped.png')
     st.title(screen)
-    logo_cache_key = f"{symbol}_logo"
-    cached_logo = client.get(logo_cache_key)
-    st.title("__Finer Consulting Group__")
+
+
+    if not validate_symbol(symbol, st):
+        st.text("Please enter a symbol to get started")
+    else:
+
+        logo_cache_key = f"{symbol}_logo"
+        cached_logo = client.get(logo_cache_key)
+        st.title("__Finer Consulting Group__")
 
 
 
 
-    st.subheader("Welcome to Finer Advisory Group. Want investment and sector data, fx, news and stock predictions?")
+        st.subheader("Welcome to Finer Advisory Group. Want investment and sector data, fx, news and stock predictions?")
 
-    st.subheader("Use the left-side bar and input your desired ticker.")
+        st.subheader("Use the left-side bar and input your desired ticker.")
 
-    st.subheader("Then click on the desired function drop to load the data.")
+        st.subheader("Then click on the desired function drop to load the data.")
 
-    st.subheader("If you find the application useful please consider joining the premium account.")
+        st.subheader("If you find the application useful please consider joining the premium account.")
 
 
 
-    st.form('my_form_identifier')
-    st.color_picker('Pick a color')
+        st.form('my_form_identifier')
+        st.color_picker('Pick a color')
 
-    st.markdown("DISCLAIMER:The investments and services offered by us may not be suitable for all investors.")
-    st.markdown( "if you have any doubts as to the merits of an investment, you should seek advice from an independent financial advisor.")
-    st.markdown("__Finer Advisory Group__")
-    st.time_input('Time entry')
-    #img= image.open("Telcast.jpeg")
-    #st.image(img)
+        st.markdown("DISCLAIMER:The investments and services offered by us may not be suitable for all investors.")
+        st.markdown( "if you have any doubts as to the merits of an investment, you should seek advice from an independent financial advisor.")
+        st.markdown("__Finer Advisory Group__")
+        st.time_input('Time entry')
+        #img= image.open("Telcast.jpeg")
+        #st.image(img)
 if screen == 'Overview':
     logo_cache_key = f"{symbol}_logo"
     cached_logo = client.get(logo_cache_key)
