@@ -9,3 +9,4 @@ iexfinance
 pystan
 matplotlib
 plotly
+streamlit_tags
