@@ -8,3 +8,4 @@ yfinance
 iexfinance
 pystan
 matplotlib
+plotly
