@@ -25,6 +25,7 @@ import graphs
 import helpers
 import quantstats_modified as qs_mod
 import quantstats_modified.reports as qs_mod_reports
+from subprocess import Popen
 
 stocks = get_stock_list()
 if not os.path.exists('qs_reports'):
@@ -45,7 +46,10 @@ try:
     symbol=keywords[0].lower()
 
     stock = IEXStock(config.IEX_TOKEN, symbol)
-
+	
+    Process = Popen(['redis-server'])
+    import time
+    time.sleep(20)
     client = redis.Redis(host="localhost", port=6379)
 
     screen = st.sidebar.selectbox("View", ('Homepage',
