@@ -16,8 +16,6 @@ from plotly.subplots import make_subplots
 import streamlit as st
 from datetime import date
 import yfinance as yf
-from fbprophet import Prophet
-from fbprophet.plot import plot_plotly
 from plotly import graph_objs as go
 #from PIL import Image
 from streamlit_tags import st_tags, st_tags_sidebar
@@ -57,7 +55,6 @@ try:
                                            'Ownership',
                                            'Open and Close Performance',
                                            'Performance indicators',
-                                           'Forecast',
                                            'Oil and CPI',
                                            'FX',
                                            'Sector',

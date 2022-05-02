@@ -5,7 +5,5 @@ numpy
 pandas
 pandas-datareader
 yfinance
-fbprophet
 iexfinance
 pystan
-
