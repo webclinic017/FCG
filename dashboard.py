@@ -31,7 +31,7 @@ if not os.path.exists('qs_reports'):
     os.makedirs('qs_reports')
 
 etf_mapping = {"SPY": "S&P500", "DIA":"Dow Jones", "IWM": "Russell 2000"}
-st.sidebar.image("Logo cropped.png", use_column_width=True)
+st.sidebar.image("Logo_live.png", use_column_width=True)
 #st.set_page_config(initial_sidebar_state="expanded")
 #symbol = st.sidebar.text_input("Symbol/ticker")
 keywords = st_tags_sidebar(
